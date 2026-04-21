@@ -19,9 +19,9 @@ const links = [
   { Icon: Phone, label: "Call My Number", value: PHONE, href: `tel:${PHONE}` },
   { Icon: MessageCircle, label: "WhatsApp", value: "Chat with me", href: `https://wa.me/${PHONE_INTL}` },
   { Icon: Mail, label: "Email", value: EMAIL, href: `mailto:${EMAIL}` },
-  { Icon: Code2, label: "GitHub", value: "@mahima-induvara", href: "#" },
-  { Icon: Camera, label: "Instagram", value: "@induvaa", href: "#" },
-  { Icon: Globe, label: "Facebook", value: "Mahima Induvara", href: "#" },
+  { Icon: Code2, label: "GitHub", value: "@mahima-induvara", href: "https://github.com/MahimaInduvara97" },
+  { Icon: Camera, label: "Instagram", value: "@induvaa", href: "https://www.instagram.com/induvaa" },
+  { Icon: Globe, label: "Facebook", value: "Mahima Induvara", href: "https://www.facebook.com/mahima.amarasekara" },
 ];
 
 export function SiteSidebar({ open, onClose }: { open: boolean; onClose: () => void }) {

@@ -5,6 +5,7 @@ import { SiteHeader } from "@/app/components/SiteHeader";
 import { SiteFooter } from "@/app/components/SiteFooter";
 import { WheelRouteNavigator } from "@/app/components/WheelRouteNavigator";
 import { PageTransition } from "@/app/components/PageTransition";
+import { Analytics } from "@vercel/analytics/next";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -112,6 +113,7 @@ export default function RootLayout({
           <PageTransition>{children}</PageTransition>
         </main>
         <SiteFooter />
+        <Analytics />
       </body>
     </html>
   );

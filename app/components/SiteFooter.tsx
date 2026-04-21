@@ -1,8 +1,8 @@
 const socials = [
-  { iconSrc: "/icons/facebook.svg", href: "#", label: "Facebook" },
-  { iconSrc: "/icons/instagram.svg", href: "#", label: "Instagram" },
-  { iconSrc: "/icons/threads.svg", href: "#", label: "Threads" },
-  { iconSrc: "/icons/github.svg", href: "#", label: "GitHub" },
+  { iconSrc: "/icons/facebook.svg", href: "https://www.facebook.com/mahima.amarasekara", label: "Facebook" },
+  { iconSrc: "/icons/instagram.svg", href: "https://www.instagram.com/induvaa", label: "Instagram" },
+  { iconSrc: "/icons/threads.svg", href: "https://www.threads.com/@_induvaa_", label: "Threads" },
+  { iconSrc: "/icons/github.svg", href: "https://github.com/MahimaInduvara97", label: "GitHub" },
 ];
 
 function SocialIcon({ src, label }: { src: string; label: string }) {

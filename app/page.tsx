@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
-import portrait from "./assets/hero-portrait.png";
 
 const baseUrl = "https://mahima.work";
 
@@ -99,7 +98,7 @@ export default function HomePage() {
 
         <div className="relative z-10 flex self-end items-end justify-center md:h-full md:justify-end">
           <Image
-            src={portrait}
+            src='/hero-portrait.webp'
             alt="Mahima Induvara"
             width={1024}
             height={1024}

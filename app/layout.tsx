@@ -94,6 +94,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
+      suppressHydrationWarning
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
       <head>
@@ -106,7 +107,10 @@ export default function RootLayout({
         <meta name="apple-mobile-web-app-capable" content="yes" />
         <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
       </head>
-      <body className="relative flex min-h-dvh flex-col overflow-x-hidden bg-hero-gradient text-foreground">
+      <body
+        suppressHydrationWarning
+        className="relative flex min-h-dvh flex-col overflow-x-hidden bg-hero-gradient text-foreground"
+      >
         <WheelRouteNavigator />
         <SiteHeader />
         <main className="relative z-10 flex-1 px-6 pb-16 pt-20 md:px-12 md:pb-28 md:pt-28">

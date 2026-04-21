@@ -19,12 +19,19 @@ const initialForm: ContactFormData = {
 export default function ContactForm() {
   const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState<ContactFormData>(initialForm);
+  const [status, setStatus] = useState<{ type: "success" | "error"; message: string } | null>(
+    null,
+  );
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+    setStatus(null);
 
     if (!formData.name || !formData.email || !formData.subject || !formData.message) {
-      alert("Please fill all fields.");
+      setStatus({
+        type: "error",
+        message: "Please fill out all fields before sending your message.",
+      });
       return;
     }
 
@@ -39,20 +46,33 @@ export default function ContactForm() {
         body: JSON.stringify(formData),
       });
 
+      const result = (await response.json().catch(() => null)) as
+        | { error?: string }
+        | null;
+
       if (!response.ok) {
-        throw new Error("Failed to send message");
+        throw new Error(result?.error || "Failed to send message");
       }
 
-      alert("Message sent successfully!");
+      setStatus({
+        type: "success",
+        message: "Message sent successfully. Thanks, I will get back to you soon.",
+      });
       setFormData(initialForm);
     } catch {
-      alert("Failed to send message. Please try again later.");
+      setStatus({
+        type: "error",
+        message: "Could not send your message right now. Please try again in a moment.",
+      });
     } finally {
       setLoading(false);
     }
   };
 
   const onChange = (field: keyof ContactFormData, value: string) => {
+    if (status) {
+      setStatus(null);
+    }
     setFormData((prev) => ({ ...prev, [field]: value }));
   };
 
@@ -99,6 +119,19 @@ export default function ContactForm() {
       >
         {loading ? "Sending..." : "Send Message"}
       </button>
+      <div aria-live="polite" className="min-h-14">
+        {status ? (
+          <div
+            className={
+              status.type === "success"
+                ? "animate-fade-in rounded-md border border-emerald-600/40 bg-emerald-500/10 px-4 py-3 text-sm text-emerald-800"
+                : "animate-fade-in rounded-md border border-rose-600/40 bg-rose-500/10 px-4 py-3 text-sm text-rose-800"
+            }
+          >
+            {status.message}
+          </div>
+        ) : null}
+      </div>
     </form>
   );
 }

@@ -5,7 +5,7 @@ import { Phone, MessageCircle, Mail, Code2, Camera, Globe, X } from "lucide-reac
 
 const PHONE = "075 620 4045";
 const PHONE_INTL = "94774166098";
-const EMAIL = "induvara.amarasekara@gmail.com";
+const EMAIL = "mahima.levein@gmail.com";
 
 const menuLinks = [
   { label: "Home", href: "/" },
@@ -65,7 +65,7 @@ export function SiteSidebar({ open, onClose }: { open: boolean; onClose: () => v
         </div>
 
         <div className="mt-10 flex flex-col gap-2">
-          <div className="mb-3 border border-white/15 bg-white/5 p-4 md:hidden">
+          <div className="mb-3 border border-white/15 bg-white/5 p-4 md:hidden rounded-xl">
             <nav className="mt-3 flex flex-col gap-2" aria-label="Mobile menu">
               {menuLinks.map((item) => (
                 <a

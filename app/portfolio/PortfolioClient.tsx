@@ -5,7 +5,7 @@ import Link from "next/link";
 import { ArrowLeft, ArrowRight, ArrowUpRight } from "lucide-react";
 import { projects } from "@/app/lib/projects";
 
-const ITEMS_PER_PAGE = 6;
+const ITEMS_PER_PAGE = 3;
 
 export default function PortfolioClient() {
   const [page, setPage] = useState(0);
@@ -19,6 +19,20 @@ export default function PortfolioClient() {
 
   return (
     <section className="relative mx-auto flex min-h-[calc(100dvh-13rem)] w-full max-w-350 flex-col justify-center">
+      <div>
+            <div className="mb-1.5 flex items-center gap-3">
+              <span className="block h-px w-8 bg-ink" />
+              <span className="text-[10px] font-semibold uppercase tracking-[0.4em] text-ink-soft">
+                Portfolio
+              </span>
+            </div>
+            <h1 className="font-display text-6xl text-ink md:text-8xl">
+              Port<span className="text-outline">folio.</span>
+            </h1>
+            <p className="mt-5 max-w-md text-sm leading-relaxed text-ink-soft md:text-base">
+              A curated selection of projects that showcase my passion for crafting fast, clean, and scalable web experiences. Each project reflects my commitment to quality and innovation in web development.
+            </p>
+          </div>
       <div className="mb-6 flex items-end justify-center text-center">
         <div className="hidden items-center gap-2 md:flex">
           <button

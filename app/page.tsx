@@ -56,7 +56,7 @@ export default function HomePage() {
       </span> */}
       <span
           aria-hidden
-          className="font-display text-glow pointer-events-none absolute left-1/2 top-1/2 -z-0 -translate-x-1/2 -translate-y-1/2 select-none whitespace-normal text-center text-[15vw] opacity-50 sm:whitespace-nowrap"
+          className="font-display text-glow pointer-events-none absolute left-1/2 top-1/2 -z-0 -translate-x-1/2 -translate-y-1/2 select-none whitespace-normal text-center text-[18vw] md:text-[12vw] lg:text-[15vw] opacity-50 sm:whitespace-nowrap"
         >
           Hello World!
         </span>
@@ -65,7 +65,7 @@ export default function HomePage() {
           <div className="flex items-center gap-3">
             <span className="block h-px w-10 bg-ink" />
             <span className="text-xs font-semibold uppercase tracking-[0.4em] text-ink-soft">
-              Hey,
+              Hey!
             </span>
           </div>
 
@@ -102,7 +102,7 @@ export default function HomePage() {
             alt="Mahima Induvara"
             width={1024}
             height={1024}
-            className="self-end max-h-[calc(100dvh-9rem)] w-auto object-contain object-bottom drop-shadow-[0_30px_40px_rgba(0,0,0,0.25)] md:max-h-[calc(100dvh-7rem)]"
+            className="self-end max-h-[calc(100dvh-9rem)] w-auto object-contain object-bottom lg:drop-shadow-[0_30px_40px_rgba(0,0,0,0.25)] md:max-h-[calc(100dvh-7rem)]"
             priority
           />
         </div>

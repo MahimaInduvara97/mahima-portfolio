@@ -28,13 +28,13 @@ function SocialIcon({ src, label }: { src: string; label: string }) {
 export function SiteFooter() {
   return (
     <>
-      <div className="absolute bottom-8 left-6 z-30 flex items-center gap-5 md:left-12">
+      <div className="absolute bottom-2 lg:bottom-6 left-6 z-30 flex items-center gap-5 md:left-12 glass-effect p-2 rounded-full">
         {socials.map(({ iconSrc, href, label }) => (
           <a
             key={label}
             href={href}
             aria-label={label}
-            className="text-ink-mute transition-colors hover:text-ink"
+            className="text-ink-mute transition-colors hover:text-ink flex items-center justify-center rounded-full"
           >
             <SocialIcon src={iconSrc} label={label} />
           </a>

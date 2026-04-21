@@ -77,7 +77,7 @@ export default function ContactForm() {
   };
 
   return (
-    <form className="mx-auto flex w-full max-w-xl flex-col gap-5" onSubmit={handleSubmit}>
+    <form className=" relative mx-auto flex w-full max-w-xl flex-col gap-5" onSubmit={handleSubmit}>
       <input
         name="name"
         placeholder="Your name"
@@ -119,7 +119,7 @@ export default function ContactForm() {
       >
         {loading ? "Sending..." : "Send Message"}
       </button>
-      <div aria-live="polite" className="min-h-14">
+      <div aria-live="polite" className="min-h-14 absolute -bottom-18 w-full">
         {status ? (
           <div
             className={

@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import PortfolioClient from "./PortfolioClient";
 
-const baseUrl = "https://mahima-induvara.vercel.app";
+const baseUrl = "https://mahima.work";
 
 export const metadata: Metadata = {
   title: "Portfolio - Web Projects & Case Studies",

@@ -22,7 +22,7 @@ export async function generateMetadata({ params }: ProjectPageProps): Promise<Me
     };
   }
 
-  const baseUrl = "https://mahima-induvara.vercel.app";
+  const baseUrl = "https://mahima.work";
   const projectUrl = `${baseUrl}/portfolio/${slug}`;
 
   return {

@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 
-const baseUrl = "https://mahima-induvara.vercel.app";
+const baseUrl = "https://mahima.work";
 
 export const metadata: Metadata = {
   title: "Tech Stack & Skills",

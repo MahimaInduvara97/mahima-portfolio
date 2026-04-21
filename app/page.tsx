@@ -3,7 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 import portrait from "./assets/hero-portrait.png";
 
-const baseUrl = "https://mahima-induvara.vercel.app";
+const baseUrl = "https://mahima.work";
 
 export const metadata: Metadata = {
   title: "Mahima Induvara - Senior Frontend Developer",

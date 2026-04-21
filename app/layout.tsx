@@ -16,7 +16,7 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
-const baseUrl = "https://mahima-induvara.vercel.app";
+const baseUrl = "https://mahima.work";
 
 export const metadata: Metadata = {
   title: {

@@ -2,8 +2,8 @@
   "@context": "https://schema.org",
   "@type": "Person",
   "name": "Mahima Induvara",
-  "url": "https://mahima-induvara.vercel.app",
-  "image": "https://mahima-induvara.vercel.app/og-image.png",
+  "url": "https://mahima.work",
+  "image": "https://mahima.work/og-image.png",
   "description": "Senior Frontend Developer specializing in React and Next.js",
   "sameAs": [
     "https://github.com/mahima-induvara",

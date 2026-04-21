@@ -14,4 +14,4 @@ User-agent: Googlebot
 Allow: /
 Crawl-delay: 0
 
-Sitemap: https://mahima-induvara.vercel.app/sitemap.xml
+Sitemap: https://mahima.work/sitemap.xml

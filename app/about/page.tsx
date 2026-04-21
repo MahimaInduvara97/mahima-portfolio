@@ -1,10 +1,32 @@
 import type { Metadata } from "next";
 import { Briefcase, FolderCheck, GraduationCap, School } from "lucide-react";
 
+const baseUrl = "https://mahima.work";
+
 export const metadata: Metadata = {
-  title: "About",
+  title: "About Mahima Induvara",
   description:
-    "Learn more about Mahima Induvara, a frontend developer focused on clean interfaces and responsive design.",
+    "Learn about Mahima Induvara's journey as a Senior Frontend Developer. 5+ years of industry experience, 30+ projects shipped. Education from SLIIT. Specialized in React, Next.js, and clean UI design.",
+  keywords: [
+    "about mahima induvara",
+    "frontend developer experience",
+    "web developer portfolio",
+    "design and development",
+    "clean code",
+    "responsive design expertise",
+  ],
+  openGraph: {
+    type: "profile",
+    url: `${baseUrl}/about`,
+    title: "About Mahima Induvara - Senior Frontend Developer",
+    description: "5+ years of industry experience in frontend development. 30+ projects shipped.",
+    siteName: "Mahima Induvara",
+  },
+  twitter: {
+    card: "summary",
+    title: "About Mahima Induvara",
+    description: "Senior Frontend Developer with 5+ years experience",
+  },
 };
 
 const stats = [

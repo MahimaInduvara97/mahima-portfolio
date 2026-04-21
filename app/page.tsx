@@ -1,6 +1,44 @@
+import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import portrait from "./assets/hero-portrait.png";
+
+const baseUrl = "https://mahima-induvara.vercel.app";
+
+export const metadata: Metadata = {
+  title: "Mahima Induvara - Senior Frontend Developer",
+  description:
+    "Mahima Induvara is a Senior Frontend Developer specializing in React, Next.js, and modern web technologies. With 5+ years of industry experience and 30+ projects shipped, delivering bold, minimal web experiences.",
+  keywords: [
+    "frontend developer",
+    "React developer",
+    "Next.js developer",
+    "web developer",
+    "UI developer",
+    "responsive design",
+    "Sri Lanka",
+  ],
+  openGraph: {
+    type: "website",
+    url: baseUrl,
+    title: "Mahima Induvara - Senior Frontend Developer",
+    description: "Senior Frontend Developer crafting bold, minimal web experiences",
+    images: [
+      {
+        url: `${baseUrl}/og-image.png`,
+        width: 1200,
+        height: 630,
+        alt: "Mahima Induvara",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Mahima Induvara - Senior Frontend Developer",
+    description: "5+ years of experience. 30+ projects shipped.",
+    images: [`${baseUrl}/og-image.png`],
+  },
+};
 
 const highlights = [
   { label: "Location", value: "Sri Lanka" },

@@ -365,7 +365,7 @@
     mix-blend-mode: screen;
     animation: route-veil-pass 0.9s cubic-bezier(0.2, 0.7, 0.2, 1) both;
   }
-  @media-screens (max-width: 768px) {
+  @media (max-width: 768px) {
     .page-content-enter {
       animation: none;
     }

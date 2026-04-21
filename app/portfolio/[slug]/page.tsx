@@ -22,9 +22,34 @@ export async function generateMetadata({ params }: ProjectPageProps): Promise<Me
     };
   }
 
+  const baseUrl = "https://mahima-induvara.vercel.app";
+  const projectUrl = `${baseUrl}/portfolio/${slug}`;
+
   return {
-    title: project.title,
+    title: `${project.title} - Portfolio Project`,
     description: project.description,
+    keywords: [...project.stack, project.category, "web project", "portfolio"],
+    openGraph: {
+      type: "article",
+      url: projectUrl,
+      title: `${project.title} - Mahima Induvara`,
+      description: project.description,
+      images: [
+        {
+          url: project.accent,
+          width: 1200,
+          height: 630,
+          alt: project.title,
+        },
+      ],
+      siteName: "Mahima Induvara",
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: project.title,
+      description: project.description,
+      images: [project.accent],
+    },
   };
 }
 

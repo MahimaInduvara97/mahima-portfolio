@@ -1,8 +1,32 @@
 import type { Metadata } from "next";
 
+const baseUrl = "https://mahima-induvara.vercel.app";
+
 export const metadata: Metadata = {
-  title: "Contact",
-  description: "Get in touch with Mahima Induvara — Frontend Developer.",
+  title: "Contact - Get in Touch",
+  description:
+    "Contact Mahima Induvara for frontend development, web design, or project inquiries. Based in Sri Lanka. Available for freelance and full-time opportunities.",
+  keywords: [
+    "contact",
+    "hire developer",
+    "web development services",
+    "frontend development",
+    "project inquiry",
+    "freelance developer",
+    "consultation",
+  ],
+  openGraph: {
+    type: "website",
+    url: `${baseUrl}/contact`,
+    title: "Contact - Mahima Induvara",
+    description: "Get in touch with Mahima Induvara for web development projects",
+    siteName: "Mahima Induvara",
+  },
+  twitter: {
+    card: "summary",
+    title: "Contact",
+    description: "Contact Mahima Induvara for web development inquiries",
+  },
 };
 
 export default function ContactPage() {

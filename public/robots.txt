@@ -1,0 +1,17 @@
+# Robots.txt for SEO
+# Vercel will use the robots.ts file, but this serves as fallback
+
+User-agent: *
+Allow: /
+Disallow: /admin
+Disallow: /private
+Disallow: /.well-known/acme-challenge
+
+User-agent: AdsBot-Google
+Allow: /
+
+User-agent: Googlebot
+Allow: /
+Crawl-delay: 0
+
+Sitemap: https://mahima-induvara.vercel.app/sitemap.xml

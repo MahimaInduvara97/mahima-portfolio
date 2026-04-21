@@ -1,0 +1,30 @@
+# Vercel deployment ignore file
+# Exclude unnecessary files from Vercel deployment
+
+.git
+.gitignore
+.env.local
+.env.*.local
+node_modules/
+npm-debug.log
+yarn-error.log
+.DS_Store
+.next/cache/
+coverage/
+.eslintcache
+*.tsbuildinfo
+dist/
+build/
+.vercel/
+.vercel/output/
+
+# Development files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Documentation
+CONTRIBUTING.md
+SEO_OPTIMIZATION.md

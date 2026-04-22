@@ -97,7 +97,7 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
           </div>
         </div>
 
-        <div className="glass-card overflow-hidden rounded-[2rem] p-4">
+        <div className="glass-card overflow-hidden rounded-[2rem]">
           <div
             className="relative flex min-h-88 items-end overflow-hidden rounded-[1.5rem] p-6 text-white"
             style={{

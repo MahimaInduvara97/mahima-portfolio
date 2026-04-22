@@ -33,26 +33,26 @@ export default function PortfolioClient() {
               Some of the work I've done, focused on building fast, clean, and scalable web experiences. I care about keeping things simple and well built.
             </p>
           </div>
-      <div className="mb-6 flex items-end justify-center text-center">
-        <div className="hidden items-center gap-2 md:flex">
+      <div className="mb-5 mt-5 flex items-center justify-center text-center md:mb-6 md:mt-0">
+        <div className="flex items-center gap-2 rounded-full border border-ink/15 bg-white/65 px-2 py-1.5 backdrop-blur-sm">
           <button
             onClick={() => setPage((p) => Math.max(0, p - 1))}
             disabled={page === 0}
             aria-label="Previous"
-            className="rounded-full border border-ink p-2.5 text-ink transition-all hover:bg-ink hover:text-primary-foreground disabled:cursor-not-allowed disabled:opacity-30"
+            className="rounded-full border border-ink p-2 text-ink transition-all hover:bg-ink hover:text-primary-foreground disabled:cursor-not-allowed disabled:opacity-30 md:p-2.5"
           >
-            <ArrowLeft className="h-4 w-4" />
+            <ArrowLeft className="h-3.5 w-3.5 md:h-4 md:w-4" />
           </button>
-          <span className="px-3 text-xs font-semibold uppercase tracking-[0.3em] text-ink-mute">
+          <span className="px-2 text-[11px] font-semibold uppercase tracking-[0.26em] text-ink-mute md:px-3 md:text-xs md:tracking-[0.3em]">
             {String(page + 1).padStart(2, "0")} / {String(totalPages).padStart(2, "0")}
           </span>
           <button
             onClick={() => setPage((p) => Math.min(totalPages - 1, p + 1))}
             disabled={page >= totalPages - 1}
             aria-label="Next"
-            className="rounded-full border border-ink p-2.5 text-ink transition-all hover:bg-ink hover:text-primary-foreground disabled:cursor-not-allowed disabled:opacity-30"
+            className="rounded-full border border-ink p-2 text-ink transition-all hover:bg-ink hover:text-primary-foreground disabled:cursor-not-allowed disabled:opacity-30 md:p-2.5"
           >
-            <ArrowRight className="h-4 w-4" />
+            <ArrowRight className="h-3.5 w-3.5 md:h-4 md:w-4" />
           </button>
         </div>
       </div>
@@ -75,7 +75,7 @@ export default function PortfolioClient() {
               }}
               aria-hidden="true"
             />
-            <div className="absolute inset-0 bg-linear-to-t from-black/80 via-black/30 to-transparent" />
+            <div className="absolute inset-0 bg-linear-to-t from-black/92 via-black/55 to-transparent" />
             <div className="relative z-10 flex h-full flex-col justify-between p-4 text-white md:p-5">
               <div className="flex items-center justify-between">
                 <span className="rounded-full border border-white/30 bg-white/10 px-2 py-0.5 text-[9px] font-semibold uppercase tracking-[0.2em] backdrop-blur">

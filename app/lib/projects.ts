@@ -17,7 +17,7 @@ export const projects: Project[] = [
     title: "Levein Group",
     date: "2026",
     category: "Company Website (Ongoing)",
-    summary: "Corporate website for Levein Group, a Sri Lankan business conglomerate with diverse industry presence.",
+    summary: "As a developer at Levein, I worked on the corporate website for Levein Group, a Sri Lankan business conglomerate with diverse industry presence.",
     description:
       "A corporate website for a large Sri Lankan business group with a wide range of services, designed to present the company's various offerings clearly and professionally while strengthening their digital presence.",
     stack: ["Astro", "Tailwind CSS", "API Integration", "Frontend Development"],
@@ -72,7 +72,7 @@ export const projects: Project[] = [
     title: "Your Team Asia",
     date: "2025",
     category: "Content Platform",
-    summary: "Modern Astro website powered by a headless CMS setup.",
+    summary: "As a developer at Levein, I worked on a modern Astro website powered by a headless CMS setup.",
     description:
       "A performance-focused content platform built with Astro and headless CMS principles, giving editors flexibility while keeping the frontend clean, fast, and maintainable.",
     stack: ["Astro", "Headless CMS", "JavaScript", "Frontend Development"],
@@ -83,7 +83,7 @@ export const projects: Project[] = [
     title: "Remote Jobs in Asia",
     date: "2025",
     category: "Job Platform",
-    summary: "Custom WordPress job platform built for Levein Group Company.",
+    summary: "As a developer at Levein, I built a custom WordPress job platform for Levein Group Company.",
     description:
       "A specialized remote job board tailored for regional hiring needs, with custom platform behavior, structured listings, and a more focused experience than a standard blog-style WordPress setup.",
     stack: ["WordPress", "Custom Development", "Job Board Architecture", "PHP"],
@@ -127,7 +127,7 @@ export const projects: Project[] = [
     title: "i360 Web",
     date: "2025",
     category: "Healthcare Web Project",
-    summary: "Webflow-based healthcare project for a USA-focused client.",
+    summary: "As a developer at Levein, I delivered a Webflow-based healthcare project for a USA-focused client.",
     description:
       "A healthcare-related web project delivered in Webflow, with emphasis on polished layout structure, content clarity, and client-facing presentation standards.",
     stack: ["Webflow", "CMS", "Responsive Design", "Healthcare UX"],
@@ -138,7 +138,7 @@ export const projects: Project[] = [
     title: "Calendar Bro",
     date: "2025",
     category: "Web Application",
-    summary: "Astro project centered on scheduling, time-focused UX, and clean frontend delivery.",
+    summary: "As a developer at Levein, I built an Astro project centered on scheduling, time-focused UX, and clean frontend delivery.",
     description:
       "A lightweight web product built with Astro, focused on a simple, user-friendly experience around calendar-based interaction and structured information flow.",
     stack: ["Astro", "JavaScript", "Frontend Development", "UI Design"],

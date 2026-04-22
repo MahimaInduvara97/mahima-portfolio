@@ -76,7 +76,7 @@ export default function HomePage() {
           </h1>
 
           <p className="max-w-md text-sm leading-relaxed text-ink-soft md:text-base">
-            <span className="text-ink">I’m a Senior Frontend Developer</span> who cares about how things feel, not just how they look.
+            <span className="text-ink">I'm a Senior Frontend Developer</span> who cares about how things feel, not just how they look.
             I create clean, responsive, and user-focused web apps using modern tools,  with performance and usability in mind.
           </p>
 

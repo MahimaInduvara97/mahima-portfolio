@@ -46,10 +46,10 @@ export default function AboutPage() {
         </p>
       </div>
 
-      <h1 className="font-display text-center text-[11vw] leading-[0.85] text-ink md:text-[8vw] mb-2">
-        Design. Develop. 
+      <h1 className="font-display text-center text-6xl leading-[0.85] text-ink md:text-[8vw] mb-2">
+        Design. <span className="block md:inline mt-2 md:mt-0">Develop.</span>
       </h1>
-      <h2 className="font-display text-outline text-center text-[11vw] leading-[0.85] md:text-[8vw]">
+      <h2 className="font-display text-outline text-center text-6xl leading-[0.85] md:text-[8vw]">
         Deliver.
       </h2>
 

@@ -91,7 +91,7 @@ export default function HomePage() {
               href="/contact"
               className="text-xs font-semibold uppercase tracking-[0.3em] text-ink-soft hover:text-ink"
             >
-              Let's Work Together →
+              Let's Talk →
             </Link>
           </div>
         </div>

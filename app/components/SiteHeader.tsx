@@ -29,7 +29,7 @@ export function SiteHeader() {
           type="button"
           onClick={() => setOpen(true)}
           aria-label="Open menu"
-          className="group flex flex-col gap-0.75 p-1 transition-transform hover:scale-110 cursor-pointer"
+          className="lg:w-50 group flex flex-col gap-0.75 p-1 transition-transform hover:scale-110 cursor-pointer"
         >
           <span className="block h-0.75 w-8 bg-ink transition-all group-hover:w-6" />
           <span className="block h-0.75 w-6 bg-ink transition-all group-hover:w-8" />

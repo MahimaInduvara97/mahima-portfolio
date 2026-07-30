@@ -56,6 +56,7 @@ export async function generateMetadata({ params }: ProjectPageProps): Promise<Me
 export default async function ProjectPage({ params }: ProjectPageProps) {
   const { slug } = await params;
   const project = getProject(slug);
+  const projectLink = project?.link && project.link !== "#" ? project.link : null;
 
   if (!project) {
     notFound();
@@ -117,9 +118,22 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
                   A compact, visual presentation designed to keep the story readable at every size.
                 </p>
               </div>
-              <span className="flex h-12 w-12 items-center justify-center rounded-full border border-white/25 bg-white/10 backdrop-blur">
-                <ArrowUpRight className="h-5 w-5" />
-              </span>
+              {projectLink ? (
+                <Link
+                  href={projectLink}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label={`Open ${project.title} in a new tab`}
+                  className="group relative isolate flex h-12 w-12 items-center justify-center overflow-hidden rounded-full border border-white/25 bg-white/10 backdrop-blur transition-all duration-300 hover:-translate-y-0.5 hover:bg-white/15 hover:shadow-[0_0_24px_rgba(255,255,255,0.22)]"
+                >
+                  <span className="pointer-events-none absolute inset-y-[-35%] left-[-55%] w-[45%] skew-x-[-20deg] bg-linear-to-r from-transparent via-white/65 to-transparent opacity-0 blur-md transition-all duration-700 group-hover:translate-x-[320%] group-hover:opacity-100" />
+                  <ArrowUpRight className="h-5 w-5" />
+                </Link>
+              ) : (
+                <span className="flex h-12 w-12 items-center justify-center rounded-full border border-white/25 bg-white/10 backdrop-blur">
+                  <ArrowUpRight className="h-5 w-5" />
+                </span>
+              )}
             </div>
           </div>
         </div>

@@ -98,7 +98,7 @@ export default function HomePage() {
 
         <div className="relative z-10 flex self-end items-end justify-center md:h-full md:justify-end">
           <Image
-            src='/hero-portrait.webp'
+            src='/my-port.webp'
             alt="Mahima Induvara"
             width={1024}
             height={1024}

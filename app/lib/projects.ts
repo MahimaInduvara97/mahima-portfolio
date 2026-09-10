@@ -14,6 +14,24 @@ export type Project = {
 
 export const projects: Project[] = [
   {
+    slug: "nuts-on-top",
+    title: "Nuts On Top Website",
+    date: "2026",
+    category: "E-Commerce Website",
+    summary:"As the developer, I built and finalized a modern e-commerce website with a custom Next.js frontend integrated with WooCommerce.",
+    description:"A full-featured e-commerce platform for Nuts On Top, developed with Next.js and integrated with WooCommerce for product, order, coupon, and admin management.",
+    stack: [
+      "NEXT JS",
+      "Tailwind CSS",
+      "WooCommerce",
+      "WordPress",
+      "REST API Integration",
+      "Frontend Development",
+    ],
+    accent: "url('/projects/nuts-on-top.jpg')",
+    link: "https://nutsontop.lk/",
+  },
+  {
     slug: "levein-assets-management",
     title: "Levein Assets Management",
     date: "2026",

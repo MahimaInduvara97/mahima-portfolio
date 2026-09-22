@@ -39,12 +39,6 @@ export const metadata: Metadata = {
   },
 };
 
-const highlights = [
-  { label: "Location", value: "Sri Lanka" },
-  { label: "Focus", value: "Frontend & design" },
-  { label: "Availability", value: "Select projects" },
-] as const;
-
 export default function HomePage() {
   return (
     <section className="relative mx-auto -mb-16 grid min-h-[calc(100dvh-9rem)] w-full max-w-[1400px] grid-cols-1 items-center gap-6 md:-mb-28 md:min-h-[calc(100dvh-7rem)] md:grid-cols-2 md:items-end md:gap-8">
@@ -70,28 +64,28 @@ export default function HomePage() {
           </div>
 
           <h1 className="font-display text-5xl text-ink md:text-7xl lg:text-8xl">
-            I'm <span className="text-outline">Mahima</span>
+            I&apos;m <span className="text-outline">Mahima</span>
             <br />
             <span className="text-outline">Induvara.</span>
           </h1>
 
           <p className="max-w-md text-sm leading-relaxed text-ink-soft md:text-base">
-            <span className="text-ink">I'm a Senior Frontend Developer</span> who cares about how things feel, not just how they look.
+            <span className="text-ink">I&apos;m a Senior Frontend Developer</span> who cares about how things feel, not just how they look.
             I create clean, responsive, and user-focused web apps using modern tools,  with performance and usability in mind.
           </p>
 
           <div className="mt-2 flex flex-wrap items-center gap-6 sm:gap-12">
-            <a
+            <Link
               href="/portfolio"
               className="inline-flex items-center justify-center rounded-sm bg-ink px-7 py-3.5 text-xs font-bold uppercase tracking-[0.3em] text-primary-foreground transition-transform hover:-translate-y-0.5"
             >
               Portfolio
-            </a>
+            </Link>
             <Link
-              href="/contact"
+              href="/artroom"
               className="text-xs font-semibold uppercase tracking-[0.3em] text-ink-soft hover:text-ink"
             >
-              Let's Talk →
+              Explore My Room 😉
             </Link>
           </div>
         </div>

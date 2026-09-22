@@ -1,0 +1,40 @@
+.shell {
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  width: 100vw;
+  height: 100dvh;
+  overflow: hidden;
+  font-family: var(--font-artroom-body), sans-serif;
+  background: #a48e72;
+  isolation: isolate;
+}
+
+/*
+ * The shared page transition ends with a transform, which would otherwise
+ * make a fixed child use that wrapper instead of the viewport. This override
+ * activates only when the art-room layout is present.
+ */
+:global(body.artroom-mode) > header,
+:global(body.artroom-mode) > [class~="z-30"],
+:global(body:has([data-artroom-shell])) > header,
+:global(body:has([data-artroom-shell])) > [class~="z-30"] {
+  display: none;
+}
+
+:global(body.artroom-mode) > main,
+:global(body:has([data-artroom-shell])) > main {
+  min-height: 0;
+  padding: 0;
+}
+
+:global(body.artroom-mode) :global(.page-content-enter),
+:global(body:has([data-artroom-shell])) :global(.page-content-enter) {
+  transform: none;
+  filter: none;
+  animation: none;
+}
+
+:global(body:has([data-artroom-shell])) :global(.page-transition-veil) {
+  display: none;
+}

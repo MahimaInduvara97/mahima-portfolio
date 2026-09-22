@@ -88,10 +88,10 @@ export default function HomePage() {
               Portfolio
             </a>
             <Link
-              href="/contact"
+              href="/artroom"
               className="text-xs font-semibold uppercase tracking-[0.3em] text-ink-soft hover:text-ink"
             >
-              Let's Talk →
+              Explore My Room 😉
             </Link>
           </div>
         </div>

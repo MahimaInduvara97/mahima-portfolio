@@ -3,7 +3,14 @@
 import { motion, useReducedMotion } from "framer-motion";
 import styles from "./artroom.module.css";
 
-export type CueType = "corners" | "steam-ring" | "book-brackets" | "calendar-ring" | "breeze";
+export type CueType =
+  | "corners"
+  | "steam-ring"
+  | "book-brackets"
+  | "calendar-ring"
+  | "breeze"
+  | "shelf-ring"
+  | "music-note";
 
 type DiscoveryCueProps = {
   type: CueType;
@@ -30,6 +37,7 @@ export function DiscoveryCue({ type, label, hint, reveal, delay }: DiscoveryCueP
         {type === "book-brackets" ? <b className={styles.cueBook} /> : null}
         {type === "calendar-ring" ? <b className={styles.pageCorner} /> : null}
         {type === "breeze" ? <b className={styles.breezeLines}>〰 〰</b> : null}
+        {type === "music-note" ? <b className={styles.musicNote}>♪</b> : null}
       </span>
       <span className={styles.discoveryLabel}>
         <strong>{label}</strong>

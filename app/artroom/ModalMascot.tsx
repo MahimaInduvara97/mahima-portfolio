@@ -5,7 +5,7 @@ import { Mascot } from "page-mascot";
 import styles from "./artroom.module.css";
 
 type ModalMascotProps = {
-  variant: "dino" | "hamster" | "raccoon" | "redpanda" | "cat";
+  variant: "dino" | "hamster" | "raccoon" | "redpanda" | "cat" | "sloth" | "tiger" | "toaster" | "beard" | "bear" | "frog" | "sheep";
   label: string;
   helper: string;
   size?: number;

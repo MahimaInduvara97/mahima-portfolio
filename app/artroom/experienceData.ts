@@ -19,7 +19,7 @@ export const experienceYears: ExperienceYear[] = [
     title: "Graduation milestone",
     description:
       "Completed my undergraduate journey in Information Technology and began turning academic knowledge into practical software work.",
-    bullets: ["Software development foundations", "Web technologies", "Databases", "Problem solving"],
+    bullets: ["Software development", "Web technologies", "Databases", "Problem solving"],
     note: "where the next chapter started",
     mark: "⌁",
     image: "/graduate.png",
@@ -32,7 +32,7 @@ export const experienceYears: ExperienceYear[] = [
     title: "Software engineering begins",
     description:
       "Started working professionally on business software and client-facing systems, learning how production work differs from classroom projects.",
-    bullets: ["C# and .NET", "SQL-backed applications", "Web development", "CRM and ERP integrations"],
+    bullets: ["PHP", "My SQL", "Web development", "CMS systems"],
     note: "from projects to production",
     mark: "{ }",
   },
@@ -62,7 +62,7 @@ export const experienceYears: ExperienceYear[] = [
     title: "Research + Artificial Intelligence",
     description:
       "Expanded beyond traditional software engineering into machine learning and NLP research, connecting technical experiments with practical product ideas.",
-    bullets: ["BERT fine-tuning", "NLP workflows", "Federated learning", "Privacy-preserving machine learning"],
+    bullets: ["Automation", "n8n workflows", "Federated learning", "Code Optimization"],
     note: "software meets research",
     mark: "✦",
   },

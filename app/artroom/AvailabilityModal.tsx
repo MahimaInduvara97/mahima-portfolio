@@ -35,7 +35,7 @@ export const AvailabilityModal = forwardRef<HTMLDivElement, AvailabilityModalPro
       <div className={styles.availabilityBadges}>{availabilityItems.map((item) => <span key={item}>{item}</span>)}</div>
       <div className={styles.availabilityDetails}>
         <div><Code2 aria-hidden="true" /><span><small>Preferred work</small><strong>Frontend / Web Development</strong></span></div>
-        <div><Clock3 aria-hidden="true" /><span><small>Response time</small><strong>Usually within 24–48 hours</strong></span></div>
+        <div><Clock3 aria-hidden="true" /><span><small>Response time</small><strong>Usually within 24 - 48 hours</strong></span></div>
       </div>
       <button type="button" className={styles.contactCta} onClick={onContact}>Contact Me <ArrowRight aria-hidden="true" /></button>
     </motion.div>

@@ -14,7 +14,17 @@ export type ExperienceYear = {
 
 export const experienceYears: ExperienceYear[] = [
   {
-    year: 2020,
+    year: 2021,
+    eyebrow: "first real chapter",
+    title: "Software engineering begins",
+    description:
+      "Started working professionally on business software and client-facing systems, learning how production work differs from classroom projects.",
+    bullets: ["PHP", "My SQL", "Web development", "CMS systems"],
+    note: "from projects to production",
+    mark: "{ }",
+  },
+  {
+    year: 2022,
     eyebrow: "the beginning",
     title: "Graduation milestone",
     description:
@@ -25,16 +35,6 @@ export const experienceYears: ExperienceYear[] = [
     image: "/graduate.png",
     imageAlt: "Mahima at graduation",
     imageCaption: "graduation day",
-  },
-  {
-    year: 2022,
-    eyebrow: "first real chapter",
-    title: "Software engineering begins",
-    description:
-      "Started working professionally on business software and client-facing systems, learning how production work differs from classroom projects.",
-    bullets: ["PHP", "My SQL", "Web development", "CMS systems"],
-    note: "from projects to production",
-    mark: "{ }",
   },
   {
     year: 2023,
@@ -59,10 +59,10 @@ export const experienceYears: ExperienceYear[] = [
   {
     year: 2025,
     eyebrow: "exploring intelligence",
-    title: "Research + Artificial Intelligence",
+    title: "Artificial Intelligence Self-Study",
     description:
-      "Expanded beyond traditional software engineering into machine learning and NLP research, connecting technical experiments with practical product ideas.",
-    bullets: ["Automation", "n8n workflows", "Federated learning", "Code Optimization"],
+      "Explored machine learning and natural-language processing through research, experimentation, and practical chatbot development.",
+    bullets: ["Automation", "n8n workflows", "Vibe Coding", "Code Optimization"],
     note: "software meets research",
     mark: "✦",
   },

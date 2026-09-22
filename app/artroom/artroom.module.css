@@ -305,6 +305,28 @@
   height: 1.1rem;
 }
 
+.roomHud {
+  position: absolute;
+  right: clamp(1rem, 2.5vw, 2rem);
+  bottom: clamp(1rem, 2.5vw, 2rem);
+  z-index: 6;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  color: #fffaf0;
+  font-family: var(--font-artroom-ui), sans-serif;
+  text-shadow: 0 1px 5px rgb(24 17 13 / 0.9);
+}
+
+.musicToggle { display: grid; width: 2.65rem; height: 2.65rem; place-items: center; padding: 0; cursor: pointer; color: inherit; background: rgb(37 29 25 / 0.42); border: 1px solid rgb(255 255 255 / 0.55); border-radius: 50%; backdrop-filter: blur(6px); transition: background 150ms ease, transform 150ms ease; }
+.musicToggle:hover { background: rgb(37 29 25 / 0.68); transform: translateY(-1px); }
+.musicToggle:focus-visible { outline: 3px solid rgb(255 250 240 / 0.75); outline-offset: 3px; }
+.musicToggle svg { width: 1rem; height: 1rem; fill: currentColor; }
+.discoveryProgress { display: grid; gap: 0.18rem; padding-left: 0.75rem; border-left: 1px solid rgb(255 255 255 / 0.48); }
+.discoveryProgress p { display: flex; justify-content: space-between; gap: 0.65rem; margin: 0; font-size: 0.7rem; letter-spacing: 0.04em; }
+.discoveryProgress p:last-child { opacity: 0.78; }
+.discoveryProgress strong { min-width: 2.1rem; text-align: right; font-variant-numeric: tabular-nums; }
+
 .mobileNav {
   display: none;
 }
@@ -320,6 +342,8 @@
   backdrop-filter: blur(3px);
   animation: fadeIn 180ms ease-out;
 }
+
+.completionBackdrop { z-index: 11; }
 
 .projectPaper {
   --paper: #f5eddd;
@@ -2314,6 +2338,16 @@
 .funnyPaper h2 { margin: 0.5rem 0 0.75rem; font-family: var(--font-artroom-hand), cursive; font-size: clamp(1.35rem, 4vw, 1.85rem); font-weight: 400; line-height: 1.35; }
 .funnyPaper > p:last-child { margin: 0; color: var(--muted-pencil); font-size: 0.82rem; }
 
+.discoveryCompletePaper { width: min(28rem, calc(100vw - 2rem)); overflow: visible; padding: 1.6rem 2rem 1.8rem; text-align: center; }
+.discoveryCompleteMascot { width: 8.5rem; margin: -1rem auto 0.35rem; animation: discoveryBounce 850ms ease-out both; }
+.discoveryCompletePaper h2 { margin: 0.45rem 0 0.7rem; font-family: var(--font-artroom-hand), cursive; font-size: clamp(1.7rem, 4vw, 2.35rem); font-weight: 400; line-height: 1.2; }
+.discoveryCompletePaper > p:not(.handNote) { margin: 0 auto 0.7rem; color: var(--muted-pencil); line-height: 1.55; }
+.discoveryCompletePaper small { color: #79523f; font-family: var(--font-artroom-hand), cursive; font-size: 1rem; }
+.discoverySparkle { position: absolute; top: 1.5rem; left: 18%; width: 1.7rem; color: #b68a3b; animation: discoverySparkle 1.3s ease-in-out infinite; }
+
+@keyframes discoveryBounce { 45% { transform: translateY(-8px) scale(1.06); } 70% { transform: translateY(2px) scale(0.98); } }
+@keyframes discoverySparkle { 50% { opacity: 0.5; transform: scale(0.78) rotate(18deg); } }
+
 .secretPaper { width: min(42rem, calc(100vw - 2rem)); min-height: 29rem; padding-top: 2rem; }
 .secretHeader { min-height: 6rem; padding-left: 7rem; padding-right: 2.5rem; margin-bottom: 1rem; border-bottom: 2px solid rgb(91 70 54 / 0.32); }
 .secretHeader h2 { margin: 0; font-family: var(--font-artroom-ui), sans-serif; font-size: clamp(1.8rem, 4.5vw, 3.2rem); line-height: 1; letter-spacing: -0.045em; }
@@ -2501,11 +2535,12 @@
   background-position: 50% 50%;
   filter: drop-shadow(0 12px 12px rgb(66 49 38 / 0.18));
   animation: loaderFaces 3s steps(1, end) both;
-  margin-right: 40px;
+  margin-right: 35px;
 }
 
 .loaderContent > p {
   margin: 0.2rem 0 0;
+  margin-top: -2rem;
   font-family: var(--font-artroom-ui), sans-serif;
   font-size: clamp(1rem, 2vw, 1.35rem);
   font-weight: 650;
@@ -2953,7 +2988,9 @@
   .contactCta { transition: none; }
 
   .plantWatered,
-  .lockerWrong .lockerForm > div { animation: none; }
+  .lockerWrong .lockerForm > div,
+  .discoveryCompleteMascot,
+  .discoverySparkle { animation: none; }
 
   .backgroundDay,
   .backgroundNight { transition-duration: 120ms; }

@@ -51,7 +51,7 @@ export function SiteSidebar({ open, onClose }: { open: boolean; onClose: () => v
               Get in touch
             </p>
             <h2 className="mt-2 font-display text-3xl text-white">
-              Let's <span className="text-white/40">connect.</span>
+              Let&apos;s <span className="text-white/40">connect.</span>
             </h2>
           </div>
           <button

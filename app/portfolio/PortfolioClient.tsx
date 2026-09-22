@@ -30,7 +30,7 @@ export default function PortfolioClient() {
               Port<span className="text-outline">folio.</span>
             </h1>
             <p className="mt-5 max-w-md text-sm leading-relaxed text-ink-soft md:text-base">
-              Some of the work I've done, focused on building fast, clean, and scalable web experiences. I care about keeping things simple and well built.
+              Some of the work I&apos;ve done, focused on building fast, clean, and scalable web experiences. I care about keeping things simple and well built.
             </p>
           </div>
       <div className="mb-5 mt-5 flex items-center justify-center text-center md:mb-6 md:mt-0">

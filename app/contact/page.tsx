@@ -42,7 +42,7 @@ export default function ContactPage() {
             </span>
           </div>
           <h1 className="font-display text-6xl text-ink md:text-8xl">
-            Let's <span className="text-outline">talk.</span>
+            Let&apos;s <span className="text-outline">talk.</span>
           </h1>
           <p className="mt-6 max-w-md text-sm leading-relaxed text-ink-soft md:text-base">
             Have a project in mind, or just want to say hi? Drop a message and I&apos;ll get back

@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { Eye, EyeOff } from "lucide-react";
+import { Eye, EyeOff, Pause, Play } from "lucide-react";
 import { AnimatePresence } from "framer-motion";
 import { Mascot } from "page-mascot";
 import { useCallback, useEffect, useRef, useState, useSyncExternalStore } from "react";
@@ -25,16 +25,24 @@ import { VisionModal } from "./VisionModal";
 import { PlantsModal } from "./PlantsModal";
 import { LockerModal } from "./LockerModal";
 import { TestimonialsModal } from "./TestimonialsModal";
+import { DiscoveryCompleteModal } from "./DiscoveryCompleteModal";
 import { projects } from "../lib/projects";
 import { ROOM_BACKGROUNDS, ROOM_THEME_STORAGE_KEY } from "./roomLinks";
-import { DESKTOP_ROOM_MEDIA_QUERY, SHOW_DEBUG_MAP } from "./roomConfig";
+import {
+  DESKTOP_ROOM_MEDIA_QUERY,
+  DISCOVERABLE_HOTSPOT_IDS,
+  DISCOVERY_COMPLETE_STORAGE_KEY,
+  DISCOVERY_STORAGE_KEY,
+  SHOW_DEBUG_MAP,
+  type DiscoverableHotspotId,
+} from "./roomConfig";
 import { BeardReactionSprite } from "./BeardReactionSprite";
 import { DiscoveryCue, type CueType } from "./DiscoveryCue";
 import styles from "./artroom.module.css";
 
 type HotspotId =
   | "projects" | "skills" | "about" | "experience" | "contact"
-  | "theme" | "social" | "resume" | "songs" | "hobbies" | "gallery"
+  | "theme" | "social" | "resume" | "music" | "songs" | "hobbies" | "gallery"
   | "fun-facts" | "funny" | "secret" | "vision" | "goals"
   | "availability" | "testimonials" | "locker" | "plants";
 
@@ -213,6 +221,24 @@ const modalHotspots: HotspotId[] = [
   "plants", "locker", "testimonials",
 ];
 
+const discoverableHotspotIds = new Set<string>(DISCOVERABLE_HOTSPOT_IDS);
+
+function readDiscoveredItems() {
+  if (typeof window === "undefined") return new Set<DiscoverableHotspotId>();
+
+  try {
+    const stored = JSON.parse(window.localStorage.getItem(DISCOVERY_STORAGE_KEY) ?? "[]");
+    if (!Array.isArray(stored)) return new Set<DiscoverableHotspotId>();
+    return new Set(
+      stored.filter((id): id is DiscoverableHotspotId =>
+        typeof id === "string" && discoverableHotspotIds.has(id),
+      ),
+    );
+  } catch {
+    return new Set<DiscoverableHotspotId>();
+  }
+}
+
 function subscribeToDesktopViewport(onChange: () => void) {
   const mediaQuery = window.matchMedia(DESKTOP_ROOM_MEDIA_QUERY);
   mediaQuery.addEventListener("change", onChange);
@@ -259,8 +285,13 @@ function DesktopArtRoom() {
   const [showLoader, setShowLoader] = useState(true);
   const [showDiscovery, setShowDiscovery] = useState(false);
   const [roomTheme, setRoomTheme] = useState<RoomTheme>("day");
+  const [discoveredItems, setDiscoveredItems] = useState(readDiscoveredItems);
+  const [isMusicPlaying, setIsMusicPlaying] = useState(false);
+  const [showDiscoveryComplete, setShowDiscoveryComplete] = useState(false);
   const dialogRef = useRef<HTMLDivElement>(null);
+  const completionDialogRef = useRef<HTMLDivElement>(null);
   const lastTriggerRef = useRef<HTMLButtonElement | null>(null);
+  const audioRef = useRef<HTMLAudioElement | null>(null);
 
   const openSection = (section: RoomSection) => {
     lastTriggerRef.current = document.activeElement as HTMLButtonElement;
@@ -275,9 +306,55 @@ function DesktopArtRoom() {
     });
   };
 
+  const playBackgroundMusic = useCallback(async () => {
+    const audio = audioRef.current;
+    if (!audio || !audio.paused) return;
+
+    try {
+      await audio.play();
+    } catch {
+      setIsMusicPlaying(false);
+    }
+  }, []);
+
+  const toggleBackgroundMusic = useCallback(() => {
+    const audio = audioRef.current;
+    if (!audio) return;
+    if (audio.paused) void playBackgroundMusic();
+    else audio.pause();
+  }, [playBackgroundMusic]);
+
+  const markDiscovered = (id: HotspotId) => {
+    if (!discoverableHotspotIds.has(id)) return;
+    const discoverableId = id as DiscoverableHotspotId;
+
+    setDiscoveredItems((current) => {
+      if (current.has(discoverableId)) return current;
+
+      const next = new Set(current);
+      next.add(discoverableId);
+      window.localStorage.setItem(DISCOVERY_STORAGE_KEY, JSON.stringify([...next]));
+
+      if (
+        next.size === DISCOVERABLE_HOTSPOT_IDS.length
+        && window.localStorage.getItem(DISCOVERY_COMPLETE_STORAGE_KEY) !== "true"
+      ) {
+        window.localStorage.setItem(DISCOVERY_COMPLETE_STORAGE_KEY, "true");
+        setShowDiscoveryComplete(true);
+      }
+
+      return next;
+    });
+  };
+
   const activateHotspot = (section: RoomSection) => {
+    markDiscovered(section.id);
     if (section.id === "theme") {
       toggleTheme();
+      return;
+    }
+    if (section.id === "music") {
+      void playBackgroundMusic();
       return;
     }
     if (modalHotspots.includes(section.id)) openSection(section);
@@ -296,6 +373,26 @@ function DesktopArtRoom() {
   const finishLoading = useCallback(() => {
     setShowLoader(false);
     setShowDiscovery(true);
+  }, []);
+
+  useEffect(() => {
+    const audio = new Audio("/winding.mp3");
+    audio.volume = 0.25;
+    audio.loop = true;
+    const handlePlay = () => setIsMusicPlaying(true);
+    const handlePause = () => setIsMusicPlaying(false);
+    audio.addEventListener("play", handlePlay);
+    audio.addEventListener("pause", handlePause);
+    audio.addEventListener("ended", handlePause);
+    audioRef.current = audio;
+
+    return () => {
+      audio.pause();
+      audio.removeEventListener("play", handlePlay);
+      audio.removeEventListener("pause", handlePause);
+      audio.removeEventListener("ended", handlePause);
+      audioRef.current = null;
+    };
   }, []);
 
   useEffect(() => {
@@ -321,11 +418,11 @@ function DesktopArtRoom() {
   }, []);
 
   useEffect(() => {
-    if (!activeSection) return;
+    if (!activeSection && !showDiscoveryComplete) return;
 
     const previousOverflow = document.body.style.overflow;
     document.body.style.overflow = "hidden";
-    const dialog = dialogRef.current;
+    const dialog = showDiscoveryComplete ? completionDialogRef.current : dialogRef.current;
     const getFocusable = () => dialog?.querySelectorAll<HTMLElement>(
       'button, a[href], input, select, textarea, [tabindex]:not([tabindex="-1"])',
     );
@@ -333,7 +430,10 @@ function DesktopArtRoom() {
     focusable?.[0]?.focus();
 
     const handleKeyDown = (event: KeyboardEvent) => {
-      if (event.key === "Escape") closeSection();
+      if (event.key === "Escape") {
+        if (showDiscoveryComplete) setShowDiscoveryComplete(false);
+        else closeSection();
+      }
       const currentFocusable = getFocusable();
       if (event.key !== "Tab" || !currentFocusable?.length) return;
 
@@ -354,7 +454,9 @@ function DesktopArtRoom() {
       document.removeEventListener("keydown", handleKeyDown);
       document.body.style.overflow = previousOverflow;
     };
-  }, [activeSection]);
+  }, [activeSection, showDiscoveryComplete]);
+
+  const hiddenItems = DISCOVERABLE_HOTSPOT_IDS.length - discoveredItems.size;
 
   return (
     <section className={styles.room} aria-label="Interactive portfolio room">
@@ -382,8 +484,10 @@ function DesktopArtRoom() {
           {roomSections.map((section, index) => {
             const opensModal = modalHotspots.includes(section.id);
             const isTheme = section.id === "theme";
-            const ariaLabel = isTheme
-              ? `Switch to ${roomTheme === "day" ? "night" : "day"} mode`
+            const ariaLabel = section.id === "music"
+              ? "Play background music"
+              : isTheme
+                ? `Switch to ${roomTheme === "day" ? "night" : "day"} mode`
               : opensModal
                 ? `Open ${section.label}`
                 : `${section.label} — coming soon`;
@@ -458,6 +562,22 @@ function DesktopArtRoom() {
         </button>
       ) : null}
 
+      <aside className={styles.roomHud} aria-label="Music and room discovery">
+        <button
+          type="button"
+          className={styles.musicToggle}
+          onClick={toggleBackgroundMusic}
+          aria-label={isMusicPlaying ? "Pause background music" : "Play background music"}
+          aria-pressed={isMusicPlaying}
+        >
+          {isMusicPlaying ? <Pause aria-hidden="true" /> : <Play aria-hidden="true" />}
+        </button>
+        <div className={styles.discoveryProgress} aria-live="polite">
+          <p><span>Found Items</span> <strong>{discoveredItems.size}/{DISCOVERABLE_HOTSPOT_IDS.length}</strong></p>
+          <p><span>Still Hidden</span> <strong>{hiddenItems}</strong></p>
+        </div>
+      </aside>
+
       <nav className={styles.mobileNav} aria-label="Room sections">
         {roomSections.map((section) => (
           <button key={section.id} type="button" onClick={() => activateHotspot(section)}>
@@ -509,6 +629,19 @@ function DesktopArtRoom() {
           ) : (
             null
           )}
+        </div>
+      ) : null}
+
+      {showDiscoveryComplete ? (
+        <div
+          className={`${styles.backdrop} ${styles.completionBackdrop}`}
+          role="presentation"
+          onMouseDown={() => setShowDiscoveryComplete(false)}
+        >
+          <DiscoveryCompleteModal
+            ref={completionDialogRef}
+            onClose={() => setShowDiscoveryComplete(false)}
+          />
         </div>
       ) : null}
     </section>

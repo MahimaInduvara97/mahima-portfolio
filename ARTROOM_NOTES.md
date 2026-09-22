@@ -36,6 +36,9 @@ Build a one-screen interactive portfolio room in Next.js. `public/room.png` is t
 - Resume hotspot: document-drawer modal configured through `app/artroom/roomLinks.ts`; add `public/resume.pdf` and enable its flag when ready
 - Social hotspot: personal links and Facebook-page cards configured centrally in `app/artroom/roomLinks.ts`; missing URLs remain non-interactive
 - Songs: compact two-track player using the real MP3s in `public/songs`, with progress, previous/next, automatic advance, and the sloth mascot
+- Background music: the non-modal Music hotspot and bottom-right HUD share one looping `Audio` instance for `public/winding.mp3` at 25% volume; playback starts only after user interaction and preserves its position across pauses
+- Discovery progress: the explicit 15-item list and storage keys live in `app/artroom/roomConfig.ts`; unique clicks persist in `portfolio-discovered-items`, while `portfolio-discovery-complete-shown` prevents the 15/15 celebration from repeating after refresh
+- Discovery completion: `app/artroom/DiscoveryCompleteModal.tsx` reuses the existing bottom-right laughing frame from `beard-reactions.webp`; the HUD and controller are owned by `DesktopArtRoom` in `ArtRoomScene.tsx`
 - Hobbies: five-item illustrated card modal with the tiger mascot
 - Gallery: ten-photo contained slideshow sourced from `public/gallery`, with arrows, keyboard/swipe navigation, thumbnails, and the toaster mascot
 - Fun Facts: compact `public/fun.mp4` reel modal with audible autoplay attempt, tap-to-play fallback, delayed caption, and first/last beard reaction loop

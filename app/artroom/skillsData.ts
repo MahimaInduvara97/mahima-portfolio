@@ -16,7 +16,7 @@ export type SkillBookData = {
 
 export const shelfLabels: Record<SkillCategory, string> = {
   frontend: "build",
-  ai: "AI + research",
+  ai: "AI",
   education: "education + career",
 };
 
@@ -113,15 +113,15 @@ export const skillBooks: SkillBookData[] = [
     height: 122,
   },
   {
-    id: "federated-learning",
-    title: "Federated Learning",
-    shortLabel: "Federated",
+    id: "vibe-coding",
+    title: "Vibe Coding",
+    shortLabel: "Vibe",
     category: "ai",
     kind: "skill",
-    level: "Research interest",
-    summary: "I am interested in privacy-preserving ML and learning across distributed data sources.",
-    experience: ["Federated concepts", "Privacy-aware ML", "Distributed learning", "Research review"],
-    tags: ["Federated ML", "Privacy", "Research"],
+    level: "Interest",
+    summary: "Vibe Coding is a new approach to AI-assisted coding that uses natural-language prompts to generate code and workflows.",
+    experience: ["Natural language prompts", "Code generation", "Workflow automation", "AI-assisted development"],
+    tags: ["Vibe Coding", "AI", "Coding"],
     tone: "sage",
     height: 138,
   },

@@ -1,7 +1,8 @@
 "use client";
 
 import Image from "next/image";
-import { Eye, EyeOff, Pause, Play } from "lucide-react";
+import Link from "next/link";
+import { Eye, EyeOff, House, Pause, Play } from "lucide-react";
 import { AnimatePresence } from "framer-motion";
 import { Mascot } from "page-mascot";
 import { useCallback, useEffect, useRef, useState, useSyncExternalStore } from "react";
@@ -96,7 +97,7 @@ const roomSections: RoomSection[] = [
     id: "contact",
     label: "Contact",
     hint: "Open window",
-    cueType: "breeze",
+    cueType: "contact-ring",
     position: { left: "86%", top: "24%", width: "6%", height: "15%" },
   },
    {
@@ -271,6 +272,10 @@ export function ArtRoomScene() {
         <h1 id="desktop-required-title">Best experienced on desktop</h1>
         <p>This portfolio is an interactive room made for a bigger screen.</p>
         <p>Open it on a laptop or desktop to get the real experience.</p>
+        <Link href="/" className={styles.mobileHomeLink}>
+          <House aria-hidden="true" />
+          Bring me back home
+        </Link>
       </section>
     );
   }

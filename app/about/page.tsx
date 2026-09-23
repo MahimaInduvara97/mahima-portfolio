@@ -6,7 +6,7 @@ const baseUrl = "https://mahima.work";
 export const metadata: Metadata = {
   title: "About Mahima Induvara",
   description:
-    "Learn about Mahima Induvara's journey as a Senior Frontend Developer. 5+ years of industry experience, 30+ projects shipped. Education from SLIIT. Specialized in React, Next.js, and clean UI design.",
+    "Learn about Mahima Induvara's journey as a Senior Frontend Developer. 4+ years of industry experience, 30+ projects shipped. Education from SLIIT. Specialized in React, Next.js, and clean UI design.",
   keywords: [
     "about mahima induvara",
     "frontend developer experience",
@@ -19,20 +19,20 @@ export const metadata: Metadata = {
     type: "profile",
     url: `${baseUrl}/about`,
     title: "About Mahima Induvara - Senior Frontend Developer",
-    description: "5+ years of industry experience in frontend development. 30+ projects shipped.",
+    description: "4+ years of industry experience in frontend development. 30+ projects shipped.",
     siteName: "Mahima Induvara",
   },
   twitter: {
     card: "summary",
     title: "About Mahima Induvara",
-    description: "Senior Frontend Developer with 5+ years experience",
+    description: "Senior Frontend Developer with 4+ years experience",
   },
 };
 
 const stats = [
   { icon: School, label: "School", value: "Isipathana College" },
   { icon: GraduationCap, label: "University", value: "SLIIT - BSc (Hons) IT" },
-  { icon: Briefcase, label: "Experience", value: "5+ Years Industry Experience" },
+  { icon: Briefcase, label: "Experience", value: "4+ Years Industry Experience" },
   { icon: FolderCheck, label: "Projects", value: "30+ Projects Shipped" },
 ] as const;
 

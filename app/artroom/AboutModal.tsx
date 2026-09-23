@@ -84,7 +84,7 @@ export const AboutModal = forwardRef<HTMLDivElement, AboutModalProps>(function A
             <section>
               <h3>What I do</h3>
               <p>
-                I build responsive products with React, Next.js, Astro, and WordPress—then refine
+                I build responsive products with React, Next.js, Astro, and WordPress, then refine
                 the layout, interaction, and small details until the experience feels right.
               </p>
             </section>
@@ -108,7 +108,7 @@ export const AboutModal = forwardRef<HTMLDivElement, AboutModalProps>(function A
             <a href="mailto:induvara.amarasekara@gmail.com" className={styles.paperLink}>
               Say hello <span aria-hidden="true">↗</span>
             </a>
-            <span className={styles.aboutFootnote}>5+ years · 30+ projects</span>
+            <span className={styles.aboutFootnote}>4+ years · 20+ projects</span>
           </div>
         </div>
 

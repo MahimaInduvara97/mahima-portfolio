@@ -68,7 +68,7 @@ export const metadata: Metadata = {
     creator: "@mahima-induvara",
     title: "Mahima Induvara - Senior Frontend Developer",
     description:
-      "Senior Frontend Developer crafting bold, minimal web experiences. 5+ years of industry experience.",
+      "Senior Frontend Developer crafting bold, minimal web experiences. 4+ years of industry experience.",
     images: [`${baseUrl}/og-image.png`],
   },
   robots: {

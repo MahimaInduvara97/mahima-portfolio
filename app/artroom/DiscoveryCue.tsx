@@ -8,6 +8,7 @@ export type CueType =
   | "steam-ring"
   | "book-brackets"
   | "calendar-ring"
+  | "contact-ring"
   | "breeze"
   | "shelf-ring"
   | "music-note";
@@ -36,6 +37,7 @@ export function DiscoveryCue({ type, label, hint, reveal, delay }: DiscoveryCueP
         {type === "steam-ring" ? <b className={styles.steam}>〰</b> : null}
         {type === "book-brackets" ? <b className={styles.cueBook} /> : null}
         {type === "calendar-ring" ? <b className={styles.pageCorner} /> : null}
+        {type === "contact-ring" ? <b className={styles.contactMark}>✉</b> : null}
         {type === "breeze" ? <b className={styles.breezeLines}>〰 〰</b> : null}
         {type === "music-note" ? <b className={styles.musicNote}>♪</b> : null}
       </span>

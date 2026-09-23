@@ -31,6 +31,10 @@
 .mobileRestriction h1 { max-width: 30rem; margin: 0; font-family: var(--font-artroom-hand), cursive; font-size: clamp(2rem, 10vw, 3.3rem); font-weight: 400; line-height: 1.18; }
 .mobileRestriction p { max-width: 29rem; margin: 0.8rem 0 0; color: #6f6259; line-height: 1.6; }
 .mobileRestriction p + p { margin-top: 0.2rem; }
+.mobileHomeLink { display: inline-flex; align-items: center; justify-content: center; gap: 0.55rem; min-height: 3rem; margin-top: 1.4rem; padding: 0.65rem 1rem; color: #fff9ed; font-family: var(--font-artroom-ui), sans-serif; font-size: 0.78rem; font-weight: 750; letter-spacing: 0.035em; text-decoration: none; background: #79523f; border: 2px solid #49372c; border-radius: 5px 8px 4px 7px; box-shadow: 3px 4px 0 rgb(48 39 31 / 0.16); transform: rotate(-0.5deg); transition: transform 150ms ease, background 150ms ease; }
+.mobileHomeLink:hover { background: #684738; transform: translateY(-2px) rotate(-0.5deg); }
+.mobileHomeLink:focus-visible { outline: 3px solid rgb(121 82 63 / 0.4); outline-offset: 4px; }
+.mobileHomeLink svg { width: 1rem; height: 1rem; stroke-width: 2; }
 
 @media (min-width: 768px) {
   .mobileRestriction { display: none; }
@@ -158,6 +162,10 @@
 .calendar-ring { inset: 28% 8%; }
 .calendar-ring .cueArtwork { border: 2px solid currentColor; border-radius: 46% 53% 48% 55%; transform: rotate(-3deg); }
 .pageCorner { position: absolute; right: 3%; bottom: 4%; width: 0.8rem; height: 0.8rem; border-top: 2px solid currentColor; transform: rotate(-35deg); animation: pageFlutter 2.8s ease-in-out infinite; }
+
+.contact-ring { inset: 12% -18%; }
+.contact-ring .cueArtwork { color: #4c382d; border: 2px solid rgb(255 249 237 / 0.95); border-radius: 48% 53% 46% 55%; box-shadow: 0 0 0 1px rgb(56 40 31 / 0.72), 0 2px 8px rgb(35 24 18 / 0.35); transform: rotate(-3deg); animation: cueBreathe 3.2s ease-in-out infinite; }
+.contactMark { position: absolute; top: -1.15rem; right: -0.65rem; display: grid; width: 1.7rem; height: 1.7rem; place-items: center; color: #fff9ed; font-family: Georgia, serif; font-size: 0.9rem; background: rgb(72 52 41 / 0.9); border: 1px solid rgb(255 249 237 / 0.8); border-radius: 50%; box-shadow: 0 2px 5px rgb(35 24 18 / 0.35); }
 
 .breeze { inset: 38% 27%; }
 .breezeLines { position: absolute; inset: 0; display: grid; place-items: center; font-family: var(--font-artroom-hand), cursive; font-size: clamp(1.2rem, 2.2vw, 2rem); white-space: nowrap; animation: breezeFloat 3.4s ease-in-out infinite; }
@@ -2426,7 +2434,7 @@
 /* Plants, locker, and testimonials */
 .plantsPaper { width: min(30rem, calc(100vw - 2rem)); min-height: 24rem; overflow: visible; padding: 2rem; }
 .plantState { position: relative; display: grid; justify-items: center; padding-top: 5.5rem; text-align: center; }
-.plantState .modalMascot { left: 50%; transform: translateX(-50%); }
+.plantState .modalMascot { top: 0.35rem; left: 0.35rem; transform: none; }
 .plantDoodle { margin-top: 0.25rem; font-size: 3rem; filter: drop-shadow(0 5px 5px rgb(65 48 36 / 0.15)); }
 .plantWatered { animation: leafCelebrate 520ms ease-out both; }
 .plantSparkle { position: absolute; top: 5.7rem; right: 23%; width: 1.4rem; color: #b68a3b; }

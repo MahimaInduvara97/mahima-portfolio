@@ -6,7 +6,7 @@ export const ROOM_BACKGROUNDS = {
 export const ROOM_THEME_STORAGE_KEY = "portfolio-room-theme";
 
 export const RESUME_CONFIG = {
-  url: "/resume.pdf",
+  url: "/mahima-resume.pdf",
   available: true,
 } as const;
 

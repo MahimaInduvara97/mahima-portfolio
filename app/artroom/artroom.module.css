@@ -326,10 +326,28 @@
   text-shadow: 0 1px 5px rgb(24 17 13 / 0.9);
 }
 
-.musicToggle { display: grid; width: 2.65rem; height: 2.65rem; place-items: center; padding: 0; cursor: pointer; color: inherit; background: rgb(37 29 25 / 0.42); border: 1px solid rgb(255 255 255 / 0.55); border-radius: 50%; backdrop-filter: blur(6px); transition: background 150ms ease, transform 150ms ease; }
-.musicToggle:hover { background: rgb(37 29 25 / 0.68); transform: translateY(-1px); }
-.musicToggle:focus-visible { outline: 3px solid rgb(255 250 240 / 0.75); outline-offset: 3px; }
+.musicToggle, .themeToggle { display: grid; width: 2.65rem; height: 2.65rem; flex: 0 0 auto; place-items: center; padding: 0; cursor: pointer; color: inherit; background: rgb(37 29 25 / 0.42); border: 1px solid rgb(255 255 255 / 0.55); border-radius: 50%; backdrop-filter: blur(6px); transition: background 150ms ease, transform 150ms ease, box-shadow 250ms ease; }
+.musicToggle:hover, .themeToggle:hover { background: rgb(37 29 25 / 0.68); transform: translateY(-2px) scale(1.04); }
+.musicToggle:focus-visible, .themeToggle:focus-visible { outline: 3px solid rgb(255 250 240 / 0.75); outline-offset: 3px; }
 .musicToggle svg { width: 1rem; height: 1rem; fill: currentColor; }
+.themeToggle { overflow: hidden; background: rgb(37 29 25 / 0.52); }
+.themeControl { position: relative; display: grid; place-items: center; }
+.themeHint { position: absolute; right: 0; bottom: calc(100% + 0.7rem); display: grid; gap: 0.08rem; width: max-content; max-width: 10rem; padding: 0.45rem 0.65rem; color: #3f332c; text-align: left; text-shadow: none; background: rgb(255 249 237 / 0.96); border: 1px solid rgb(67 52 41 / 0.5); border-radius: 4px 7px 3px 6px; box-shadow: 3px 4px 0 rgb(45 34 26 / 0.18); opacity: 0; pointer-events: none; transform: translateY(5px) rotate(-1deg); transition: opacity 160ms ease, transform 160ms ease; }
+.themeHint::after { content: ""; position: absolute; right: 0.85rem; bottom: -0.38rem; width: 0.65rem; height: 0.65rem; background: #fff9ed; border-right: 1px solid rgb(67 52 41 / 0.5); border-bottom: 1px solid rgb(67 52 41 / 0.5); transform: rotate(45deg); }
+.themeHint strong { font-family: var(--font-artroom-hand), cursive; font-size: 0.88rem; font-weight: 400; line-height: 1.15; }
+.themeHint small { color: #75695e; font-size: 0.62rem; font-weight: 700; letter-spacing: 0.035em; }
+.themeControl:hover .themeHint,
+.themeControl:focus-within .themeHint { opacity: 1; transform: translateY(0) rotate(-1deg); }
+.themeToggle:has(.themeIcon[data-theme="day"]) { box-shadow: 0 0 18px rgb(255 215 94 / 0.3); }
+.themeToggle:has(.themeIcon[data-theme="night"]) { box-shadow: 0 0 18px rgb(178 198 255 / 0.32); }
+.themeIcon { width: 2rem; height: 2rem; overflow: visible; }
+.sunIcon, .moonIcon { transform-box: fill-box; transform-origin: center; transition: opacity 420ms ease, transform 560ms cubic-bezier(.34, 1.56, .64, 1); }
+.themeIcon[data-theme="day"] .sunIcon { opacity: 1; transform: rotate(0deg) scale(1); }
+.themeIcon[data-theme="day"] .moonIcon { opacity: 0; transform: rotate(90deg) scale(.35); }
+.themeIcon[data-theme="night"] .sunIcon { opacity: 0; transform: rotate(-100deg) scale(.35); }
+.themeIcon[data-theme="night"] .moonIcon { opacity: 1; transform: rotate(0deg) scale(1); }
+.sunRays { animation: sunRayDance 4s ease-in-out infinite; transform-box: fill-box; transform-origin: center; }
+.moonStars { animation: starTwinkle 1.8s ease-in-out infinite alternate; transform-box: fill-box; transform-origin: center; }
 .discoveryProgress { display: grid; gap: 0.18rem; padding-left: 0.75rem; border-left: 1px solid rgb(255 255 255 / 0.48); }
 .discoveryProgress p { display: flex; justify-content: space-between; gap: 0.65rem; margin: 0; font-size: 0.7rem; letter-spacing: 0.04em; }
 .discoveryProgress p:last-child { opacity: 0.78; }
@@ -1961,6 +1979,16 @@
   to { opacity: 1; transform: scale(1) rotate(2deg); }
 }
 
+@keyframes sunRayDance {
+  0%, 100% { transform: rotate(0deg) scale(1); }
+  50% { transform: rotate(12deg) scale(1.08); }
+}
+
+@keyframes starTwinkle {
+  from { opacity: 0.55; transform: scale(0.82) rotate(-5deg); }
+  to { opacity: 1; transform: scale(1.08) rotate(5deg); }
+}
+
 /* Contact window */
 .contactPaper {
   width: min(62rem, calc(100vw - 2rem));
@@ -3002,4 +3030,11 @@
 
   .backgroundDay,
   .backgroundNight { transition-duration: 120ms; }
+
+  .sunRays,
+  .moonStars { animation: none; }
+
+  .sunIcon,
+  .moonIcon,
+  .themeToggle { transition: none; }
 }

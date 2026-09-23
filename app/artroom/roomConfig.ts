@@ -1,4 +1,4 @@
-export const SHOW_DEBUG_MAP = false;
+export const SHOW_DEBUG_MAP = true;
 export const DESKTOP_ROOM_MEDIA_QUERY = "(min-width: 768px)";
 
 export const DISCOVERABLE_HOTSPOT_IDS = [

@@ -49,6 +49,40 @@ type HotspotId =
 
 type RoomTheme = "day" | "night";
 
+function CuteThemeIcon({ theme }: { theme: RoomTheme }) {
+  return (
+    <svg
+      className={styles.themeIcon}
+      data-theme={theme}
+      viewBox="0 0 48 48"
+      aria-hidden="true"
+    >
+      <g className={styles.sunIcon}>
+        <g className={styles.sunRays} stroke="currentColor" strokeLinecap="round" strokeWidth="2.8">
+          <path d="M24 3.8v4.4M24 39.8v4.4M3.8 24h4.4M39.8 24h4.4" />
+          <path d="m9.7 9.7 3.1 3.1M35.2 35.2l3.1 3.1M38.3 9.7l-3.1 3.1M12.8 35.2l-3.1 3.1" />
+        </g>
+        <circle cx="24" cy="24" r="12.5" fill="#ffd75e" stroke="#fff4b8" strokeWidth="1.8" />
+        <circle cx="19.6" cy="22.2" r="1.25" fill="#684c42" />
+        <circle cx="28.4" cy="22.2" r="1.25" fill="#684c42" />
+        <path d="M19.5 27.2c1.3 2.1 3 3 4.5 3s3.2-.9 4.5-3" fill="none" stroke="#684c42" strokeLinecap="round" strokeWidth="1.7" />
+        <circle cx="16.7" cy="26.1" r="1.5" fill="#f4a09a" opacity=".7" />
+        <circle cx="31.3" cy="26.1" r="1.5" fill="#f4a09a" opacity=".7" />
+      </g>
+      <g className={styles.moonIcon}>
+        <path d="M32.9 34.7A14.8 14.8 0 0 1 19.2 8.8 15.8 15.8 0 1 0 32.9 34.7Z" fill="#dce7ff" stroke="#f7f4ff" strokeLinejoin="round" strokeWidth="1.8" />
+        <circle cx="21.3" cy="22" r="1.15" fill="#53617c" />
+        <circle cx="25.9" cy="24" r="1.15" fill="#53617c" />
+        <path d="M20.4 27.1c1.1 1.5 2.5 2.2 4 2.2" fill="none" stroke="#53617c" strokeLinecap="round" strokeWidth="1.5" />
+        <g className={styles.moonStars} fill="#fff4b8">
+          <path d="m35.8 8.2 1 2.3 2.3 1-2.3 1-1 2.3-1-2.3-2.3-1 2.3-1Z" />
+          <path d="m39 21.2.7 1.6 1.6.7-1.6.7-.7 1.6-.7-1.6-1.6-.7 1.6-.7Z" />
+        </g>
+      </g>
+    </svg>
+  );
+}
+
 type RoomSection = {
   id: HotspotId;
   label: string;
@@ -503,7 +537,11 @@ function DesktopArtRoom() {
               type="button"
               data-section={section.id}
               className={`${styles.hotspot} ${showDraftMap ? styles.hotspotDebug : ""}`}
-              style={section.position}
+              style={
+                section.id === "contact" && roomTheme === "night"
+                  ? { left: "80%", top: "40%", width: "6%", height: "9%" }
+                  : section.position
+              }
               aria-label={ariaLabel}
               aria-haspopup={opensModal ? "dialog" : undefined}
               aria-pressed={isTheme ? roomTheme === "night" : undefined}
@@ -568,6 +606,22 @@ function DesktopArtRoom() {
       ) : null}
 
       <aside className={styles.roomHud} aria-label="Music and room discovery">
+        <div className={styles.themeControl}>
+          <button
+            type="button"
+            className={styles.themeToggle}
+            onClick={toggleTheme}
+            aria-label={`Switch to ${roomTheme === "day" ? "night" : "day"} mode`}
+            aria-describedby="room-theme-hint"
+            aria-pressed={roomTheme === "night"}
+          >
+            <CuteThemeIcon theme={roomTheme} />
+          </button>
+          <span id="room-theme-hint" role="tooltip" className={styles.themeHint}>
+            <strong>Window magic</strong>
+            <small>Click for {roomTheme === "day" ? "night" : "day"}</small>
+          </span>
+        </div>
         <button
           type="button"
           className={styles.musicToggle}

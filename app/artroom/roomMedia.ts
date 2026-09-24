@@ -1,6 +1,6 @@
 export const favoriteTracks = [
-  { title: "Man Giya Joben", src: "/songs/Man_Giya_Joben.mp3" },
   { title: "One Direction", src: "/songs/One_Direction.mp3" },
+  { title: "Man Giya Joben (Sri Lankan Song)", src: "/songs/Man_Giya_Joben.mp3" },
 ] as const;
 
 export const galleryImages = [

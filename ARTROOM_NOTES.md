@@ -18,7 +18,10 @@ Build a one-screen interactive portfolio room in Next.js. `public/room.png` is t
 - Sections: Projects, Skills & Education, About Me, Experience, Contact
 - Discovery: production uses small object-specific pencil cues with sequential reveal, hover labels, and large invisible hit areas
 - Discovery map: pencil cues remain available independently of the optional rectangular debug map
-- Mobile: viewports below 768px show a dedicated desktop-recommendation screen and do not mount the interactive room
+- Mobile: viewports below 768px use the real full-height room as a draggable camera world with Desk, Shelf, Bed, and Window snap points; all existing hotspots and modals remain available
+- Mobile camera: configuration lives in `app/artroom/roomConfig.ts`; the camera position uses a Framer Motion value, clamps to the artwork bounds, survives theme/modal changes, recalculates on resize, and distinguishes drags from hotspot taps
+- Mobile discovery: only the current camera zone reveals temporary labels, with a short first-visit swipe hint and safe-area-aware pencil-dot navigation
+- Mobile modals: existing dialogs open as compact paper sheets over the preserved camera position
 - Projects: all entries come directly from `app/lib/projects.ts`; the illustrated explorer shows four folders per page with Previous/Next controls and a reusable case-study view
 - Debug map: controlled manually by `SHOW_DEBUG_MAP` in `app/artroom/roomConfig.ts`
 - Projects mascot: reusable top-left modal mascot using the dino direction/reaction sheets

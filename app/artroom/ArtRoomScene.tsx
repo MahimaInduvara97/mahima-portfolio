@@ -1,11 +1,11 @@
 "use client";
 
 import Image from "next/image";
-import Link from "next/link";
-import { Eye, EyeOff, House, Pause, Play } from "lucide-react";
-import { AnimatePresence } from "framer-motion";
+import { Eye, EyeOff, Pause, Play } from "lucide-react";
+import { AnimatePresence, animate, motion, useMotionValue } from "framer-motion";
 import { Mascot } from "page-mascot";
 import { useCallback, useEffect, useRef, useState, useSyncExternalStore } from "react";
+import { createPortal } from "react-dom";
 import { AboutModal } from "./AboutModal";
 import { ExperienceModal } from "./ExperienceModal";
 import { ContactModal } from "./ContactModal";
@@ -34,10 +34,11 @@ import {
   DISCOVERABLE_HOTSPOT_IDS,
   DISCOVERY_COMPLETE_STORAGE_KEY,
   DISCOVERY_STORAGE_KEY,
+  MOBILE_CAMERA_ZONES,
   SHOW_DEBUG_MAP,
   type DiscoverableHotspotId,
+  type MobileCameraZoneId,
 } from "./roomConfig";
-import { BeardReactionSprite } from "./BeardReactionSprite";
 import { DiscoveryCue, type CueType } from "./DiscoveryCue";
 import styles from "./artroom.module.css";
 
@@ -295,42 +296,72 @@ export function ArtRoomScene() {
     getServerDesktopViewportSnapshot,
   );
 
-  if (!isDesktop) {
-    return (
-      <section className={styles.mobileRestriction} aria-labelledby="desktop-required-title">
-        <BeardReactionSprite
-          reaction="mobile-alternating"
-          label="Smiling beard mascot changing between sparkle and blushing expressions"
-          className={styles.mobileRestrictionMascot}
-        />
-        <h1 id="desktop-required-title">Best experienced on desktop</h1>
-        <p>This portfolio is an interactive room made for a bigger screen.</p>
-        <p>Open it on a laptop or desktop to get the real experience.</p>
-        <Link href="/" className={styles.mobileHomeLink}>
-          <House aria-hidden="true" />
-          Bring me back home
-        </Link>
-      </section>
-    );
-  }
-
-  return <DesktopArtRoom />;
+  return <RoomExperience isMobile={!isDesktop} />;
 }
 
-function DesktopArtRoom() {
+function RoomExperience({ isMobile }: { isMobile: boolean }) {
   const [activeSection, setActiveSection] = useState<RoomSection | null>(null);
   const [showDraftMap, setShowDraftMap] = useState(false);
   const [projectsHovered, setProjectsHovered] = useState(false);
   const [showLoader, setShowLoader] = useState(true);
   const [showDiscovery, setShowDiscovery] = useState(false);
   const [roomTheme, setRoomTheme] = useState<RoomTheme>("day");
-  const [discoveredItems, setDiscoveredItems] = useState(readDiscoveredItems);
+  const [discoveredItems, setDiscoveredItems] = useState<Set<DiscoverableHotspotId>>(
+    () => new Set(),
+  );
   const [isMusicPlaying, setIsMusicPlaying] = useState(false);
   const [showDiscoveryComplete, setShowDiscoveryComplete] = useState(false);
   const dialogRef = useRef<HTMLDivElement>(null);
   const completionDialogRef = useRef<HTMLDivElement>(null);
   const lastTriggerRef = useRef<HTMLButtonElement | null>(null);
   const audioRef = useRef<HTMLAudioElement | null>(null);
+  const cameraX = useMotionValue(0);
+  const cameraDraggedRef = useRef(false);
+  const [activeZone, setActiveZone] = useState<MobileCameraZoneId>("desk");
+  const [mobileViewport, setMobileViewport] = useState({ width: 0, height: 0 });
+  const [showSwipeHint, setShowSwipeHint] = useState(true);
+
+  const mobileRoomWidth = Math.max(mobileViewport.width, mobileViewport.height * 1.7768);
+  const mobileMinX = Math.min(0, mobileViewport.width - mobileRoomWidth);
+
+  const getZoneTarget = useCallback((zoneId: MobileCameraZoneId) => {
+    const zone = MOBILE_CAMERA_ZONES.find((item) => item.id === zoneId) ?? MOBILE_CAMERA_ZONES[0];
+    const desired = mobileViewport.width / 2 - mobileRoomWidth * zone.focusX;
+    return Math.max(mobileMinX, Math.min(0, desired));
+  }, [mobileMinX, mobileRoomWidth, mobileViewport.width]);
+
+  const moveCameraTo = useCallback((zoneId: MobileCameraZoneId, animated = true) => {
+    if (!isMobile || !mobileViewport.width) return;
+    const target = getZoneTarget(zoneId);
+    setActiveZone(zoneId);
+    setShowDiscovery(false);
+    window.requestAnimationFrame(() => setShowDiscovery(true));
+    if (animated) {
+      animate(cameraX, target, { type: "spring", stiffness: 165, damping: 27, mass: 0.8 });
+    } else {
+      cameraX.set(target);
+    }
+  }, [cameraX, getZoneTarget, isMobile, mobileViewport.width]);
+
+  const finishCameraDrag = (velocityX: number) => {
+    const currentIndex = MOBILE_CAMERA_ZONES.findIndex((zone) => zone.id === activeZone);
+    let nextIndex = currentIndex;
+
+    if (velocityX < -500) nextIndex = Math.min(MOBILE_CAMERA_ZONES.length - 1, currentIndex + 1);
+    else if (velocityX > 500) nextIndex = Math.max(0, currentIndex - 1);
+    else {
+      let closestDistance = Number.POSITIVE_INFINITY;
+      MOBILE_CAMERA_ZONES.forEach((zone, index) => {
+        const distance = Math.abs(cameraX.get() - getZoneTarget(zone.id));
+        if (distance < closestDistance) {
+          closestDistance = distance;
+          nextIndex = index;
+        }
+      });
+    }
+
+    moveCameraTo(MOBILE_CAMERA_ZONES[nextIndex].id);
+  };
 
   const openSection = (section: RoomSection) => {
     lastTriggerRef.current = document.activeElement as HTMLButtonElement;
@@ -400,6 +431,7 @@ function DesktopArtRoom() {
   };
 
   const closeSection = () => {
+    cameraDraggedRef.current = false;
     setActiveSection(null);
     requestAnimationFrame(() => lastTriggerRef.current?.focus());
   };
@@ -435,6 +467,43 @@ function DesktopArtRoom() {
   }, []);
 
   useEffect(() => {
+    const frame = window.requestAnimationFrame(() => {
+      setDiscoveredItems(readDiscoveredItems());
+    });
+    return () => window.cancelAnimationFrame(frame);
+  }, []);
+
+  useEffect(() => {
+    if (!isMobile) return;
+    let frame = window.requestAnimationFrame(() => {
+      setMobileViewport({ width: window.innerWidth, height: window.innerHeight });
+    });
+    const handleResize = () => {
+      window.cancelAnimationFrame(frame);
+      frame = window.requestAnimationFrame(() => {
+        setMobileViewport({ width: window.innerWidth, height: window.innerHeight });
+      });
+    };
+    window.addEventListener("resize", handleResize);
+    return () => {
+      window.cancelAnimationFrame(frame);
+      window.removeEventListener("resize", handleResize);
+    };
+  }, [isMobile]);
+
+  useEffect(() => {
+    if (!isMobile || !mobileViewport.width) return;
+    const frame = window.requestAnimationFrame(() => moveCameraTo(activeZone, false));
+    return () => window.cancelAnimationFrame(frame);
+  }, [activeZone, isMobile, mobileViewport.height, mobileViewport.width, moveCameraTo]);
+
+  useEffect(() => {
+    if (!isMobile || showLoader) return;
+    const timer = window.setTimeout(() => setShowSwipeHint(false), 3500);
+    return () => window.clearTimeout(timer);
+  }, [isMobile, showLoader]);
+
+  useEffect(() => {
     const storedTheme = window.localStorage.getItem(ROOM_THEME_STORAGE_KEY);
     if (storedTheme !== "day" && storedTheme !== "night") return;
     const frame = window.requestAnimationFrame(() => setRoomTheme(storedTheme));
@@ -443,9 +512,9 @@ function DesktopArtRoom() {
 
   useEffect(() => {
     if (!showDiscovery) return;
-    const timer = window.setTimeout(() => setShowDiscovery(false), 7500);
+    const timer = window.setTimeout(() => setShowDiscovery(false), isMobile ? 2400 : 7500);
     return () => window.clearTimeout(timer);
-  }, [showDiscovery]);
+  }, [isMobile, showDiscovery]);
 
   useEffect(() => {
     if (!SHOW_DEBUG_MAP) return;
@@ -466,7 +535,8 @@ function DesktopArtRoom() {
       'button, a[href], input, select, textarea, [tabindex]:not([tabindex="-1"])',
     );
     const focusable = getFocusable();
-    focusable?.[0]?.focus();
+    focusable?.[0]?.focus({ preventScroll: true });
+    if (dialog) dialog.scrollTop = 0;
 
     const handleKeyDown = (event: KeyboardEvent) => {
       if (event.key === "Escape") {
@@ -500,7 +570,20 @@ function DesktopArtRoom() {
   return (
     <section className={styles.room} aria-label="Interactive portfolio room">
       <AnimatePresence>{showLoader ? <PortfolioLoader onComplete={finishLoading} /> : null}</AnimatePresence>
-      <div className={styles.canvas}>
+      <motion.div
+        className={`${styles.canvas} ${isMobile ? styles.mobileCanvas : ""}`}
+        style={isMobile ? { x: cameraX } : undefined}
+        drag={isMobile && !activeSection && !showDiscoveryComplete ? "x" : false}
+        dragConstraints={{ left: mobileMinX, right: 0 }}
+        dragElastic={0.04}
+        dragMomentum
+        onPointerDown={() => { cameraDraggedRef.current = false; }}
+        onDrag={(_, info) => {
+          if (Math.abs(info.offset.x) > 8) cameraDraggedRef.current = true;
+          setShowSwipeHint(false);
+        }}
+        onDragEnd={(_, info) => finishCameraDrag(info.velocity.x)}
+      >
         <Image
           src={ROOM_BACKGROUNDS.day}
           alt="A cozy illustrated developer room with a desk, bookshelf, calendar, and open window"
@@ -523,6 +606,9 @@ function DesktopArtRoom() {
           {roomSections.map((section, index) => {
             const opensModal = modalHotspots.includes(section.id);
             const isTheme = section.id === "theme";
+            const isZoneHotspot = MOBILE_CAMERA_ZONES
+              .find((zone) => zone.id === activeZone)
+              ?.hotspots.some((hotspotId) => hotspotId === section.id) ?? false;
             const ariaLabel = section.id === "music"
               ? "Play background music"
               : isTheme
@@ -536,7 +622,7 @@ function DesktopArtRoom() {
               key={section.id}
               type="button"
               data-section={section.id}
-              className={`${styles.hotspot} ${showDraftMap ? styles.hotspotDebug : ""}`}
+              className={`${styles.hotspot} ${showDraftMap ? styles.hotspotDebug : ""} ${isMobile && isZoneHotspot && showDiscovery ? styles.mobileHotspotActive : ""}`}
               style={
                 section.id === "contact" && roomTheme === "night"
                   ? { left: "80%", top: "40%", width: "6%", height: "9%" }
@@ -545,7 +631,14 @@ function DesktopArtRoom() {
               aria-label={ariaLabel}
               aria-haspopup={opensModal ? "dialog" : undefined}
               aria-pressed={isTheme ? roomTheme === "night" : undefined}
-              onClick={() => activateHotspot(section)}
+              onPointerDown={(event) => {
+                cameraDraggedRef.current = false;
+                event.stopPropagation();
+              }}
+              onClick={() => {
+                if (!cameraDraggedRef.current) activateHotspot(section);
+                cameraDraggedRef.current = false;
+              }}
               onMouseEnter={() => section.id === "projects" && setProjectsHovered(true)}
               onMouseLeave={() => section.id === "projects" && setProjectsHovered(false)}
               onFocus={() => section.id === "projects" && setProjectsHovered(true)}
@@ -555,7 +648,7 @@ function DesktopArtRoom() {
                 type={section.cueType}
                 label={section.label}
                 hint={section.hint}
-                reveal={showDiscovery}
+                reveal={isMobile ? showDiscovery && isZoneHotspot : showDiscovery}
                 delay={0.8 + index * 0.16}
               />
               {showDraftMap ? (
@@ -568,9 +661,22 @@ function DesktopArtRoom() {
             );
           })}
         </div>
-      </div>
+        {isMobile ? (
+          <div className={`${styles.mascotWrapper} ${styles.mobileWorldMascot}`}>
+            <div className={styles.mascotFloat}>
+              <Mascot
+                directions="/mascots/beard-directions.webp"
+                reactions="/mascots/beard-reactions.webp"
+                size={150}
+                label="Interactive beard mascot"
+                className={styles.mascot}
+              />
+            </div>
+          </div>
+        ) : null}
+      </motion.div>
 
-      <div
+      {!isMobile ? <div
         className={`${styles.mascotWrapper} ${
           projectsHovered ? styles.mascotInterested : ""
         } ${activeSection?.id === "projects" ? styles.mascotProjectOpen : ""}`}
@@ -584,13 +690,26 @@ function DesktopArtRoom() {
             className={styles.mascot}
           />
         </div>
-      </div>
+      </div> : null}
 
-      <div className={styles.intro}>
-        <p className={styles.eyebrow}>Hello!!!</p>
-        <h1>Explore the room</h1>
+      <div className={`${styles.intro} ${isMobile ? styles.mobileIntro : ""}`}>
+        <p className={styles.eyebrow}>{isMobile ? "Mahima's space" : "Hello!!!"}</p>
+        <h1>{isMobile ? "Look around 👀" : "Explore the room"}</h1>
         <p>Explore my room, every little corner reveals a part of my story.</p>
       </div>
+
+      <AnimatePresence>
+        {isMobile && showSwipeHint && !showLoader ? (
+          <motion.p
+            className={styles.mobileSwipeHint}
+            initial={{ opacity: 0, y: 5 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: 4 }}
+          >
+            ← swipe to explore →
+          </motion.p>
+        ) : null}
+      </AnimatePresence>
 
       {SHOW_DEBUG_MAP ? (
         <button
@@ -637,16 +756,32 @@ function DesktopArtRoom() {
         </div>
       </aside>
 
-      <nav className={styles.mobileNav} aria-label="Room sections">
-        {roomSections.map((section) => (
-          <button key={section.id} type="button" onClick={() => activateHotspot(section)}>
-            {section.label}
+      <nav className={styles.mobileNav} aria-label="Explore room areas">
+        {MOBILE_CAMERA_ZONES.map((zone) => (
+          <button
+            key={zone.id}
+            type="button"
+            className={activeZone === zone.id ? styles.mobileNavActive : ""}
+            aria-current={activeZone === zone.id ? "true" : undefined}
+            onClick={() => {
+              setShowSwipeHint(false);
+              moveCameraTo(zone.id);
+            }}
+          >
+            <span aria-hidden="true" />
+            {zone.label}
           </button>
         ))}
       </nav>
 
-      {activeSection ? (
-        <div className={styles.backdrop} role="presentation" onMouseDown={closeSection}>
+      {activeSection && typeof document !== "undefined" ? createPortal(
+        <div
+          className={styles.backdrop}
+          role="presentation"
+          onPointerDown={(event) => {
+            if (event.target === event.currentTarget) closeSection();
+          }}
+        >
           {activeSection.id === "projects" ? (
             <ProjectExplorer ref={dialogRef} projects={projects} onClose={closeSection} />
           ) : activeSection.id === "about" ? (
@@ -688,20 +823,24 @@ function DesktopArtRoom() {
           ) : (
             null
           )}
-        </div>
+        </div>,
+        document.body,
       ) : null}
 
-      {showDiscoveryComplete ? (
+      {showDiscoveryComplete && typeof document !== "undefined" ? createPortal(
         <div
           className={`${styles.backdrop} ${styles.completionBackdrop}`}
           role="presentation"
-          onMouseDown={() => setShowDiscoveryComplete(false)}
+          onPointerDown={(event) => {
+            if (event.target === event.currentTarget) setShowDiscoveryComplete(false);
+          }}
         >
           <DiscoveryCompleteModal
             ref={completionDialogRef}
             onClose={() => setShowDiscoveryComplete(false)}
           />
-        </div>
+        </div>,
+        document.body,
       ) : null}
     </section>
   );
